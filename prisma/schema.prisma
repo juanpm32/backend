@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model tbl_portafolio {
+  id_portafolio            Int      @id @default(autoincrement())
+  nombre_portafolio        String   @unique
+  descripcion_portafolio   String   @db.VarChar(500)
+  imagen_portafolio        String   @db.VarChar(300)
+  fecharegistro_portafolio DateTime @default(now())
+  estado_portafolio        Int      @default(1)
+}
+
+model tbl_turno {
+  id_turno          Int              @id @default(autoincrement())
+  descripcion_turno String           @db.VarChar(500)
+  horario_turno     String           @db.VarChar(50)
+  estado_turno      Int              @default(1)
+  entrenador        tbl_entrenador[]
+}
+
+model tbl_entrenador {
+  id_entrenador           Int       @id @default(autoincrement())
+  nombre_entrenador       String    @unique @db.VarChar(100)
+  especialidad_entrenador String    @db.VarChar(100)
+  sexo_entrenador         String    @db.Char(1)
+  imagen_entrenador       String    @db.VarChar(300)
+  estado_entrenador       Int       @default(1)
+  turno                   tbl_turno @relation(fields: [idturno], references: [id_turno], onUpdate: Restrict)
+  idturno                 Int
+}
