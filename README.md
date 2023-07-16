@@ -1,4 +1,5 @@
 # backend
-
-## paso 1
-### npm init -y
+#------------
+#
+## Paso 1
+* npm init -y *
