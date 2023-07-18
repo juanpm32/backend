@@ -11,29 +11,15 @@ datasource db {
 }
 
 model tbl_portafolio {
-  id_portafolio            Int      @id @default(autoincrement())
-  nombre_portafolio        String   @unique
-  descripcion_portafolio   String   @db.VarChar(500)
-  imagen_portafolio        String   @db.VarChar(300)
-  fecharegistro_portafolio DateTime @default(now())
-  estado_portafolio        Int      @default(1)
-}
-
-model tbl_turno {
-  id_turno          Int              @id @default(autoincrement())
-  descripcion_turno String           @db.VarChar(500)
-  horario_turno     String           @db.VarChar(50)
-  estado_turno      Int              @default(1)
-  entrenador        tbl_entrenador[]
+  id          Int    @id @default(autoincrement())
+  nombre      String @unique
+  descripcion String @db.VarChar(500)
+  imagen      String @db.VarChar(300)
 }
 
 model tbl_entrenador {
-  id_entrenador           Int       @id @default(autoincrement())
-  nombre_entrenador       String    @unique @db.VarChar(100)
-  especialidad_entrenador String    @db.VarChar(100)
-  sexo_entrenador         String    @db.Char(1)
-  imagen_entrenador       String    @db.VarChar(300)
-  estado_entrenador       Int       @default(1)
-  turno                   tbl_turno @relation(fields: [idturno], references: [id_turno], onUpdate: Restrict)
-  idturno                 Int
+  id           Int    @id @default(autoincrement())
+  nombre       String @unique @db.VarChar(100)
+  especialidad String @db.VarChar(100)
+  imagen       String @db.VarChar(300)
 }
