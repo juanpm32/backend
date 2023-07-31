@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = env("MYSQL_URI")
 }
 
 model tbl_portafolio {
@@ -22,4 +22,75 @@ model tbl_entrenador {
   nombre       String @unique @db.VarChar(100)
   especialidad String @db.VarChar(100)
   imagen       String @db.VarChar(300)
+}
+
+model tbl_usuario {
+  id     Int    @id @default(autoincrement())
+  nombre String @db.VarChar(100)
+  login  String @unique @db.VarChar(100)
+  clave  String @db.VarChar(100)
+  email  String @db.VarChar(50)
+}
+
+model tbl_articulo {
+  id_articulo          Int    @id @default(autoincrement())
+  id_subcategoria      Int
+  nombre_articulo      String @db.VarChar(100)
+  descripcion_articulo String @db.VarChar(200)
+  talla_articulo       String @db.VarChar(50)
+  color_articulo       String @db.VarChar(50)
+  precio_articulo      Float
+  marca_articulo       String @db.VarChar(50)
+  stock_articulo       Int
+  imagen_articulo      String @db.VarChar(300)
+
+  subcategoria     tbl_subcategoria   @relation(fields: [id_subcategoria], references: [id_subcategoria])
+  tbl_detalleventa tbl_detalleventa[]
+}
+
+model tbl_subcategoria {
+  id_subcategoria          Int    @id @default(autoincrement())
+  id_categoria             Int
+  descripcion_subcategoria String @db.VarChar(200)
+
+  categoria tbl_categoria  @relation(fields: [id_categoria], references: [id_categoria])
+  articulos tbl_articulo[]
+}
+
+model tbl_categoria {
+  id_categoria     Int    @id @default(autoincrement())
+  nombre_categoria String @db.VarChar(100)
+
+  subcategorias tbl_subcategoria[]
+}
+
+model tbl_cliente {
+  id                      Int         @id @default(autoincrement())
+  nombre_cliente          String      @db.VarChar(100)
+  numerodocumento_cliente String      @unique @db.VarChar(8)
+  login                   String      @unique @db.VarChar(100)
+  clave                   String      @db.VarChar(100)
+  email                   String      @db.VarChar(50)
+  ventas                  tbl_venta[]
+}
+
+model tbl_venta {
+  id_venta            Int      @id @default(autoincrement())
+  id_cliente          Int
+  tipodocumento_venta String   @db.VarChar(50)
+  fecharegistro_venta DateTime
+
+  cliente  tbl_cliente        @relation(fields: [id_cliente], references: [id])
+  detalles tbl_detalleventa[]
+}
+
+model tbl_detalleventa {
+  id_detalleventa   Int   @id @default(autoincrement())
+  id_venta          Int
+  id_articulo       Int
+  cantidad_articulo Int
+  precio_articulo   Float
+
+  venta    tbl_venta    @relation(fields: [id_venta], references: [id_venta])
+  articulo tbl_articulo @relation(fields: [id_articulo], references: [id_articulo])
 }
