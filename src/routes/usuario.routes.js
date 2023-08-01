@@ -4,7 +4,10 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const config = require('../config');
+
+router.use(cookieParser());
 
 // Middleware para verificar el token
 function verifyToken(req, res, next) {
@@ -70,6 +73,8 @@ router.post('/usuarios/login', async (req, res) => {
 
         // Generar un token de autenticación usando jsonwebtoken
         const token = jwt.sign({ id: usuario.id }, config.jwt_secret, { expiresIn: '1h' });
+
+        res.cookie('token', token, { httpOnly: true });
 
         res.json({ token });
     } catch (error) {
