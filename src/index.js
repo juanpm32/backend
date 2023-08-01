@@ -34,8 +34,8 @@ app.use('/api', require('./routes/cliente.routes'));
 // Rutas para ventas
 app.use('/api', require('./routes/venta.routes'));
 
-// Rutas para detalleventas
-app.use('/api', require('./routes/detalleventa.routes'));
+// Rutas para ventadetalle
+app.use('/api', require('./routes/ventadetalle.routes'));
 
 // Ruta de inicio
 app.get('/', (req, res) => {

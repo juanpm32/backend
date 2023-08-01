@@ -75,7 +75,7 @@ router.get('/cliente/:id', verifyToken, async (req, res) => {
 });
 
 // Actualizar un cliente por su ID (se debe incluir el middleware hashPassword)
-router.put('/cliente/:id', verifyToken, hashPassword, async (req, res) => {
+router.put('/cliente/:id', verifyToken, async (req, res) => {
 
     try {
         const { id } = req.params;
