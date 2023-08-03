@@ -37,6 +37,15 @@ app.use('/api', require('./routes/venta.routes'));
 // Rutas para ventadetalle
 app.use('/api', require('./routes/ventadetalle.routes'));
 
+// Rutas para planessuscripcion
+app.use('/api', require('./routes/ventadetalle.routes'));
+
+// Rutas para ventasuscripcion
+app.use('/api', require('./routes/ventasuscripcion.routes'));
+
+// Rutas para plansuscripcion
+app.use('/api', require('./routes/plansuscripcion.routes'));
+
 // Ruta de inicio
 app.get('/', (req, res) => {
     res.send('¡Bienvenido a la API de mi proyecto!');

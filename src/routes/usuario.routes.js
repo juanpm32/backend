@@ -4,10 +4,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
 const config = require('../config');
-
-router.use(cookieParser());
 
 // Middleware para verificar el token
 function verifyToken(req, res, next) {
@@ -20,6 +17,11 @@ function verifyToken(req, res, next) {
         console.log(decoded)
         if (err) {
             return res.status(401).json({ error: 'Token de autenticación inválido' });
+        }
+
+        // Guardar el token JWT en el localStorage del navegador
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('token', token);
         }
 
         req.userId = decoded.userId;

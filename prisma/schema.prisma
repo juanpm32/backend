@@ -65,13 +65,14 @@ model tbl_categoria {
 }
 
 model tbl_cliente {
-  id                      Int         @id @default(autoincrement())
-  nombre_cliente          String      @db.VarChar(100)
-  numerodocumento_cliente String      @unique @db.VarChar(8)
-  login                   String      @unique @db.VarChar(100)
-  clave                   String      @db.VarChar(100)
-  email                   String      @db.VarChar(50)
+  id                      Int                    @id @default(autoincrement())
+  nombre_cliente          String                 @db.VarChar(100)
+  numerodocumento_cliente String                 @unique @db.VarChar(8)
+  login                   String                 @unique @db.VarChar(100)
+  clave                   String                 @db.VarChar(100)
+  email                   String                 @db.VarChar(50)
   ventas                  tbl_venta[]
+  tbl_ventasuscripcion    tbl_ventasuscripcion[]
 }
 
 model tbl_venta {
@@ -93,4 +94,22 @@ model tbl_detalleventa {
 
   venta    tbl_venta    @relation(fields: [id_venta], references: [id_venta])
   articulo tbl_articulo @relation(fields: [id_articulo], references: [id_articulo])
+}
+
+model tbl_plansuscripcion {
+  id                   Int                    @id @default(autoincrement())
+  descripcion          String                 @unique @db.VarChar(300)
+  precio               Float
+  tbl_ventasuscripcion tbl_ventasuscripcion[]
+}
+
+model tbl_ventasuscripcion {
+  id                 Int   @id @default(autoincrement())
+  id_plansuscripcion Int
+  id_cliente         Int
+  tiempo             Int
+  precio             Float
+
+  tbl_cliente_tbl_ventasuscripcion         tbl_cliente         @relation(fields: [id_cliente], references: [id])
+  tbl_plansuscripcion_tbl_ventasuscripcion tbl_plansuscripcion @relation(fields: [id_plansuscripcion], references: [id])
 }
