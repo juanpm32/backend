@@ -33,35 +33,24 @@ model tbl_usuario {
 }
 
 model tbl_articulo {
-  id_articulo          Int    @id @default(autoincrement())
-  id_subcategoria      Int
-  nombre_articulo      String @db.VarChar(100)
-  descripcion_articulo String @db.VarChar(200)
-  talla_articulo       String @db.VarChar(50)
-  color_articulo       String @db.VarChar(50)
+  id_articulo          Int                @id @default(autoincrement())
+  nombre_articulo      String             @db.VarChar(100)
+  descripcion_articulo String             @db.VarChar(200)
+  talla_articulo       String             @db.VarChar(50)
+  color_articulo       String             @db.VarChar(50)
   precio_articulo      Float
-  marca_articulo       String @db.VarChar(50)
+  marca_articulo       String             @db.VarChar(50)
   stock_articulo       Int
-  imagen_articulo      String @db.VarChar(300)
-
-  subcategoria     tbl_subcategoria   @relation(fields: [id_subcategoria], references: [id_subcategoria])
-  tbl_detalleventa tbl_detalleventa[]
-}
-
-model tbl_subcategoria {
-  id_subcategoria          Int    @id @default(autoincrement())
-  id_categoria             Int
-  descripcion_subcategoria String @db.VarChar(200)
-
-  categoria tbl_categoria  @relation(fields: [id_categoria], references: [id_categoria])
-  articulos tbl_articulo[]
+  imagen_articulo      String             @db.VarChar(300)
+  categoria            tbl_categoria      @relation(fields: [id_categoria], references: [id_categoria])
+  id_categoria         Int
+  tbl_detalleventa     tbl_detalleventa[]
 }
 
 model tbl_categoria {
-  id_categoria     Int    @id @default(autoincrement())
-  nombre_categoria String @db.VarChar(100)
-
-  subcategorias tbl_subcategoria[]
+  id_categoria     Int            @id @default(autoincrement())
+  nombre_categoria String         @db.VarChar(100)
+  articulos        tbl_articulo[]
 }
 
 model tbl_cliente {

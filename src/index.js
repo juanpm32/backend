@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const config = require('./config');
 
+//const swaggerUi = require('swagger-ui-express');
+//const specs = require('../swaggerConfig.js');
+
 const app = express();
 
 // Middleware para procesar los cuerpos de las peticiones como JSON
@@ -25,9 +28,6 @@ app.use('/api', require('./routes/articulo.routes'));
 // Rutas para categorias
 app.use('/api', require('./routes/categoria.routes'));
 
-// Rutas para subcategorias
-app.use('/api', require('./routes/subcategoria.routes'));
-
 // Rutas para clientes
 app.use('/api', require('./routes/cliente.routes'));
 
@@ -50,6 +50,9 @@ app.use('/api', require('./routes/plansuscripcion.routes'));
 app.get('/', (req, res) => {
     res.send('¡Bienvenido a la API de mi proyecto!');
 });
+
+// Ruta sqagger
+//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Manejo de errores para rutas no encontradas (404)
 app.use((req, res) => {

@@ -3,6 +3,24 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+/**
+ * @swagger
+ * tags:
+ *   name: articulo
+ *   description: Operaciones relacionadas con los articulos
+ */
+
+/**
+ * @swagger
+ * /api/articulo:
+ *   get:
+ *     summary: Obtiene todos los articulos
+ *     tags: [Articulo]
+ *     responses:
+ *       200:
+ *         description: Lista de articulos
+ */
+
 // Obtener todos los artículos
 router.get('/articulo', async (req, res) => {
     try {
@@ -34,7 +52,7 @@ router.get('/articulo/:id', async (req, res) => {
 // Crear un nuevo artículo
 router.post('/articulo', async (req, res) => {
     const {
-        id_subcategoria,
+        id_categoria,
         nombre_articulo,
         descripcion_articulo,
         talla_articulo,
@@ -47,7 +65,7 @@ router.post('/articulo', async (req, res) => {
     try {
         const nuevoArticulo = await prisma.tbl_articulo.create({
             data: {
-                id_subcategoria,
+                id_categoria,
                 nombre_articulo,
                 descripcion_articulo,
                 talla_articulo,
@@ -68,7 +86,7 @@ router.post('/articulo', async (req, res) => {
 router.put('/articulo/:id', async (req, res) => {
     const { id } = req.params;
     const {
-        id_subcategoria,
+        id_categoria,
         nombre_articulo,
         descripcion_articulo,
         talla_articulo,
@@ -82,7 +100,7 @@ router.put('/articulo/:id', async (req, res) => {
         const articuloActualizado = await prisma.tbl_articulo.update({
             where: { id_articulo: parseInt(id) },
             data: {
-                id_subcategoria,
+                id_categoria,
                 nombre_articulo,
                 descripcion_articulo,
                 talla_articulo,

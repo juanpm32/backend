@@ -3,6 +3,24 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+/**
+ * @swagger
+ * tags:
+ *   name: portafolio
+ *   description: Operaciones relacionadas con los articulos
+ */
+
+/**
+ * @swagger
+ * /api/portafolios:
+ *   get:
+ *     summary: Obtiene todos los portafolios
+ *     tags: [Articulo]
+ *     responses:
+ *       200:
+ *         description: Lista de portafolios
+ */
+
 // Obtener todos los portafolios
 router.get('/portafolios', async (req, res) => {
     try {
